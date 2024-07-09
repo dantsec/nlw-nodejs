@@ -1,25 +1,20 @@
 import fastify from "fastify";
-import { prisma } from "./lib/prisma"
+import cors from "@fastify/cors";
+import { createTrip } from "./routes/create-trip";
+import { validatorCompiler, serializerCompiler } from "fastify-type-provider-zod";
+import { confirmTrip } from "./routes/confirm-trip";
 
 const app = fastify();
 
-app.get('/cadastrar', async () => {
-    await prisma.trip.create({
-        data: {
-            destination: 'Florianopolis',
-            start_at: new Date(),
-            ends_at: new Date(),
-        },
-    });
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
 
-    return 'Registro cadastrado!';
+app.register(cors, {
+    origin: '*',
 });
 
-app.get('/listar', async () => {
-    const trips = await prisma.trip.findMany();
-
-    return trips;
-});
+app.register(createTrip);
+app.register(confirmTrip);
 
 app.get('/helloworld', () => {
     return 'Hello, World';
