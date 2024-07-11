@@ -1,0 +1,18 @@
+meta {
+  name: Create Link
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3333/trips/fbe84602-f8f8-4992-8550-fa9f26eb114d/links
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Reserva do airbnb",
+    "url": "https://reservafoda.com.br"
+  }
+}

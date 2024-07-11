@@ -1,0 +1,26 @@
+meta {
+  name: Confirm Participant
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:3333/participants/c715c87e-0121-40f7-9e58-f7bc1b7d5f6c/confirm
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "destination": "Florianopolis",
+    "starts_at": "2024-07-10 18:00:00",
+    "ends_at": "2024-07-20 18:00:00",
+    "owner_name": "caue",
+    "owner_email": "caue@gmail.com",
+    "emails_to_invite": [
+      "teste1@gmail.com",
+      "teste2@gmail.com"
+    ]
+  }
+  
+}

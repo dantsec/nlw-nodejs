@@ -1,0 +1,18 @@
+meta {
+  name: Create Invite
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3333/trips/fbe84602-f8f8-4992-8550-fa9f26eb114d/invites
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "testando@gmail.com"
+  }
+  
+}
