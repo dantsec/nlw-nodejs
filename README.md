@@ -26,8 +26,8 @@
 
 ## Documents 📂
 
-- [**License**](./LICENSE)
-- [**API Tests**](./docs/bruno-api-client/)
+- [**License**](./docs/LICENSE)
+- [**API Tests @ Bruno**](./docs/bruno-api-client/)
 
 ## Installation / Run Locally ⚙️
 
