@@ -1,16 +1,16 @@
-import { FastifyInstance } from "fastify";
-import { ZodTypeProvider } from "fastify-type-provider-zod";
+import { FastifyInstance } from 'fastify';
+import { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { z } from 'zod';
-import { prisma } from "../lib/prisma";
-import { ClientError } from "../errors/client-error";
+import { prisma } from '../lib/prisma';
+import { ClientError } from '../errors/client-error';
 
 export async function getTripDetails(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>().get('/trips/:tripId', {
         schema: {
             params: z.object({
-                tripId: z.string().uuid(),
-            }),
-        },
+                tripId: z.string().uuid()
+            })
+        }
     }, async (request) => {
         const { tripId } = request.params;
 
@@ -20,15 +20,15 @@ export async function getTripDetails(app: FastifyInstance) {
                 destination: true,
                 starts_at: true,
                 ends_at: true,
-                is_confirmed: true,
+                is_confirmed: true
             },
-            where: { id: tripId },
+            where: { id: tripId }
         });
 
-        if(!trip) {
+        if (!trip) {
             throw new ClientError('Trip not found.');
         }
-        
+
         return { trip };
     });
 }

@@ -1,34 +1,34 @@
-import { FastifyInstance } from "fastify";
-import { ZodTypeProvider } from "fastify-type-provider-zod";
+import { FastifyInstance } from 'fastify';
+import { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { z } from 'zod';
-import { prisma } from "../lib/prisma";
-import { dayjs } from "../lib/dayjs";
-import { getMailClient } from "../lib/mail";
-import nodemailer from "nodemailer";
-import { ClientError } from "../errors/client-error";
-import { env } from "../env";
+import { prisma } from '../lib/prisma';
+import { dayjs } from '../lib/dayjs';
+import { getMailClient } from '../lib/mail';
+import nodemailer from 'nodemailer';
+import { ClientError } from '../errors/client-error';
+import { env } from '../env';
 
 export async function confirmTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get('/trips/:tripId/confirm', {
     schema: {
       params: z.object({
-        tripId: z.string().uuid(),
-      }),
-    },
+        tripId: z.string().uuid()
+      })
+    }
   }, async (request, reply) => {
     const { tripId } = request.params;
 
     const trip = await prisma.trip.findUnique({
       where: {
-        id: tripId,
+        id: tripId
       },
       include: {
         participants: {
           where: {
-            is_owner: false,
+            is_owner: false
           }
         }
-      },
+      }
     });
 
     if (!trip) {
@@ -42,7 +42,7 @@ export async function confirmTrip(app: FastifyInstance) {
 
     await prisma.trip.update({
       where: { id: tripId },
-      data: { is_confirmed: true },
+      data: { is_confirmed: true }
     });
 
     const formattedStartDate = dayjs(trip.starts_at).format('LL');
@@ -57,7 +57,7 @@ export async function confirmTrip(app: FastifyInstance) {
         const message = await mail.sendMail({
           from: {
             name: 'Equipe plann.er',
-            address: 'adm@plann.er',
+            address: 'adm@plann.er'
           },
           to: participant.email,
           subject: `Confirme sua presenca na viagem para ${trip.destination} em ${formattedStartDate}.`,
@@ -73,7 +73,7 @@ export async function confirmTrip(app: FastifyInstance) {
                     <p></p>
                     <p>Caso você não saiba do que se trata esse e-mail, apenas ignore esse e-mail.</p>
                 </div>
-            `.trim(),
+            `.trim()
         });
 
         console.log(nodemailer.getTestMessageUrl(message));
