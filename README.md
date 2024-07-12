@@ -28,6 +28,7 @@
 
 - [**License**](./docs/LICENSE)
 - [**API Tests @ Bruno**](./docs/bruno-api-client/)
+- [**Notes about Development**](./docs/nlw-notes.md)
 
 ## Installation / Run Locally ⚙️
 
