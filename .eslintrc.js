@@ -9,6 +9,16 @@ module.exports = {
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
     'comma-dangle': ['error', 'never'],
-    'no-console': 'error'
+    'no-console': ['warn'],
+    'eol-last': ['error', 'always'],
+    'keyword-spacing': ['error', {
+      'before': true,
+      'after': true
+    }],
+    'no-multiple-empty-lines': ['error', {
+      'max': 1,
+      'maxEOF': 1
+    }],
+    'no-trailing-spaces': ['error']
   }
 };
